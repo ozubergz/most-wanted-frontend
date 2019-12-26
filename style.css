@@ -1,0 +1,62 @@
+.container-fluid {
+    display: flex;
+    padding: 0px !important;
+}
+
+.side-list {
+    width: 23%;
+    height: 100%;
+    padding: 0.8rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* overflow: auto; */
+    background-color: gray;
+}
+
+.main-content {
+    width: 77%;
+    background-color: pink;
+}
+
+.card-container {
+    display: flex;
+    margin-top: 0.7rem;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.card-image {
+    width: 3rem;
+    height: 3rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: gray;
+}
+
+.card-content { 
+    padding: .5rem;
+    background-color: pink;
+}
+
+.card-name {
+    font-size: .8rem;
+}
+
+.main-images-container {
+    display: flex;
+    width: 30%;
+}
+
+#main-right-image {
+    width: 310px;
+}
+
+.comment-container {
+    margin: 1rem;
+}
+
+.username {
+    color: rgb(71, 71, 248);
+    font-size: 0.9rem;
+}
