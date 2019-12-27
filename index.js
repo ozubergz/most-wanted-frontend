@@ -25,7 +25,7 @@ const liRace = document.querySelector('#li-race');
 const detailsInfo = document.querySelector('#details-info');
 
 //Right Main Content ---> Bottom Comment List
-const commentList = document.querySelector('#comments-list');
+const commentsDiv = document.querySelector('#comments');
 
 //Sign In username
 const submitUsername = document.querySelector('#submit-username-btn');
@@ -33,14 +33,25 @@ const submitUsername = document.querySelector('#submit-username-btn');
 //Form
 const formContainer = document.querySelector('.form-container');
 
+let editComment = false;
+let currentUser;
 
-let currentUsername;
+fetchAllData();
 
-fetch('http://localhost:3000/criminals')
-.then(res => res.json())
-.then(datas => {
-    datas.forEach(renderSideList)
-});
+function fetchAllData() {
+    fetch('http://localhost:3000/criminals')
+    .then(res => res.json())
+    .then(res => { 
+        res.forEach(renderSideList)
+        renderMainContent(res[0])
+    });
+}
+
+function fetchSingleData(id) {
+    fetch(`http://localhost:3000/criminals/${id}`)
+    .then(res => res.json())
+    .then(res => renderMainContent(res.data))
+}
 
 function renderSideList(data) {
     let card = document.createElement('div');
@@ -64,10 +75,9 @@ function renderSideList(data) {
 
     card.addEventListener('click', () => {
         formContainer.innerHTML = "";
-        commentList.innerHTML = "";
-        renderMainContent(data);
+        commentsDiv.innerHTML = "";
+        fetchSingleData(data.id);
     });
-
 }
 
 function renderMainContent(data) {
@@ -88,24 +98,29 @@ function renderMainContent(data) {
     liRace.innerText = data.race;
     
     detailsInfo.innerText = data.details;
+    
+    data.comments.forEach(renderCommentList);
 
-    let input = document.createElement('textarea');
-    input.className = "form-control";
-    input.placeholder = "Tell us what you know"
-    input.rows = "10";
+    renderForm(data);
+}
+
+function renderForm(data) {
+    let commentInput = document.createElement('textarea');
+    commentInput.className = "form-control";
+    commentInput.placeholder = "Tell us what you know";
 
     let submitBtn = document.createElement('button');
     submitBtn.type="button";
     submitBtn.classList.add('btn', 'btn-primary');
     submitBtn.innerText = "COMMENT";
     
-    formContainer.append(input, submitBtn);
+    formContainer.append(commentInput, submitBtn);
 
     submitBtn.style.cursor = "not-allowed";
     submitBtn.disabled = true;
 
-    input.addEventListener('keyup', (e) => {
-        if(input.value !== "") {
+    commentInput.addEventListener('keyup', (e) => {
+        if(commentInput.value !== "") {
             submitBtn.style.cursor = "pointer";
             submitBtn.disabled = false;
         } else {
@@ -115,41 +130,141 @@ function renderMainContent(data) {
     });
 
     submitBtn.addEventListener('click', () => {
-        // console.log(input.value)
-        // console.log(currentUsername)
-        if(!currentUsername) {
-            // console.log('not signed in');
+        if(!currentUser) {
             $('#signInModal').modal('show');
         } else {
-            // console.log('signed in')
-            
+            submitBtn.disabled = "true";
+            submitBtn.style.cursor = "not-allowed";
+            createNewComment(data, commentInput)
         }
     });
-    
-    data.comments.forEach(renderCommentList);
-}
-
-function createNewComment(criminal) {
-    
 }
 
 function renderCommentList(comment) {
-    let commentDiv = document.createElement('div');
-    commentDiv.className = "comment-container"
+  
+    let commentLi  = document.createElement('div');
+    commentLi.id ="comment-list";
 
-    let hTag = document.createElement('h6');
-    hTag.className = 'username';
-    hTag.innerText = comment.user.username;
+    let username = document.createElement('h6');
+    username.id = 'comment-username';
+    username.innerText = comment.user.username;
     
-    let commentContent = document.createElement('div');
-    commentContent.className = 'comment-content';
+    let commentContent = document.createElement('p');
+    commentContent.id = 'comment-content';
     commentContent.innerText = comment.content;
 
-    commentDiv.append(hTag, commentContent)
+    let btnGroup = document.createElement('div');
+    btnGroup.id = "btn-group"
+
+    let editBtn = document.createElement("button");
+    editBtn.innerText = "Edit";
+    editBtn.classList.add('btn', 'btn-primary');
+
+    let deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "Delete"
+    deleteBtn.classList.add('btn', 'btn-danger');
+
+    btnGroup.append(editBtn, deleteBtn);
+
+    commentLi.append(username, commentContent);
+
+    ///edit comment form
+    let editComentFormGroup = document.createElement('div');
+    editComentFormGroup.id = "comment-form-group";
+
+    let commentInput = document.createElement('textarea');
+    commentInput.className = "form-control";
+    commentInput.innerText = comment.content;
+
+    let cancelBtn = document.createElement('button');
+    cancelBtn.innerText = "Cancel";
+    cancelBtn.classList.add('btn', 'btn-primary');
     
-    commentList.append(commentDiv);
+    let updateBtn = document.createElement('button');
+    updateBtn.innerText = "Update";
+    updateBtn.classList.add('btn', 'btn-danger');
+
+    editComentFormGroup.append(commentInput, cancelBtn, updateBtn);
+    editComentFormGroup.style.display = "none";
+
+    commentsDiv.insertBefore(commentLi, commentsDiv.firstChild);
+
+    if (currentUser) {
+
+        if(username.innerText === currentUser.username) commentLi.append(btnGroup, editComentFormGroup)
+
+        editBtn.addEventListener('click', () => {
+            btnGroup.style.display = "none";
+            commentContent.style.display = "none";
+            editComentFormGroup.style.display = "";
+        });
+        
+        cancelBtn.addEventListener('click', () => {
+           editComentFormGroup.style.display = "none";
+           btnGroup.style.display = "";
+           commentContent.style.display = "";
+        });
+
+        deleteBtn.addEventListener('click', () => {
+           handleRemove(commentLi, comment.id) 
+        });
+
+        updateBtn.addEventListener('click', () => {
+            updateComment(btnGroup, editComentFormGroup, commentContent, comment.id)
+        });
+        
+    }
 }
 
+function updateComment(btns, form, commentDiv, id) {
+    let content = form.querySelector('.form-control').value;
+    if(content !== "") {
+        fetch(`http://localhost:3000/comments/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content })
+        })
+        .then(res => res.json())
+        .then(newComment => {
+            form.style.display = "none";
+            btns.style.display = "";
+            commentDiv.style.display = "";
+            commentDiv.innerText = newComment.content
+        })
+    }
+    
+}
+
+function createNewComment(criminal, commentInput) {
+    fetch('http://localhost:3000/comments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user_id: currentUser.id,
+            criminal_id: criminal.id,
+            content: commentInput.value
+        })
+    })
+    .then(res => res.json())
+    .then(newComment => {
+        commentInput.value = "";
+        renderCommentList(newComment);
+    });
+}
+
+
+
+function handleRemove(comment, id) {
+    fetch(`http://localhost:3000/comments/${id}`, {
+        method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(() => comment.remove());
+}
 
 submitUsername.addEventListener('click', () => {
    let inputVal = document.querySelector('#input-username').value;
@@ -159,26 +274,33 @@ submitUsername.addEventListener('click', () => {
         errorMessage.style.color = "red";
         errorMessage.innerText = "Please enter username"
     } else {
-        let signInBtn = document.querySelector('#sign-in-btn');
-        let signedInUsername = document.querySelector('#signed-in-username');
-
-        fetch('http://localhost:3000/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username: inputVal}), // data can be `string` or {object}!
-        })
-        .then(res => res.json())
-        .then(newObj => console.log(newObj))
-
-        // signInBtn.style.display = "none";
-
-        // $('#signInModal').modal('hide');
-
-        // currentUsername = inputVal;
-        // signedInUsername.innerText = currentUsername;
+        createNewUser(inputVal);
     }
 });
+
+function createNewUser(username) {
+    let signInBtn = document.querySelector('#sign-in-btn');
+    let signedInUsername = document.querySelector('#signed-in-username');
+    let errorMessage = document.querySelector('#error-message');
+    
+    fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username })
+    })
+    .then(res => res.json())
+    .then(newUser => {
+        if (newUser.error) {
+            errorMessage.innerText = newUser.error[0]
+        } else {
+            $('#signInModal').modal('hide');
+            signInBtn.style.display = "none";
+            currentUser = newUser;
+            signedInUsername.innerText = newUser.username;
+        }
+    });
+}
 
 
