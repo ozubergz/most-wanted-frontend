@@ -1,5 +1,5 @@
 //Left side List
-const sideList = document.querySelector('.side-list');
+const sideList = document.getElementById('side-list');
 
 //Right Main Content ---> Top Name
 const mainName = document.querySelector('#main-name');
@@ -33,7 +33,8 @@ const submitUsername = document.querySelector('#submit-username-btn');
 //Form
 const formContainer = document.querySelector('.form-container');
 
-let editComment = false;
+const searchBar = document.querySelector('#search-bar');
+
 let currentUser;
 
 fetchAllData();
@@ -42,8 +43,8 @@ function fetchAllData() {
     fetch('http://localhost:3000/criminals')
     .then(res => res.json())
     .then(res => { 
-        res.forEach(renderSideList)
-        renderMainContent(res[0])
+        res.forEach(renderSideList);
+        renderMainContent(res[0]);
     });
 }
 
@@ -52,6 +53,7 @@ function fetchSingleData(id) {
     .then(res => res.json())
     .then(res => renderMainContent(res.data))
 }
+
 
 function renderSideList(data) {
     let card = document.createElement('div');
@@ -77,6 +79,17 @@ function renderSideList(data) {
         formContainer.innerHTML = "";
         commentsDiv.innerHTML = "";
         fetchSingleData(data.id);
+    });
+
+    // filter out names by search keywords
+    searchBar.addEventListener('keyup', () => {
+        let filter = searchBar.value.toUpperCase();
+        let name = cardName.textContent.toUpperCase();
+        if(name.indexOf(filter) > -1) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }       
     });
 }
 

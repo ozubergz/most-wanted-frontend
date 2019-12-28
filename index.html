@@ -19,7 +19,9 @@
     <body>
 
         <div class="container-fluid">
-            <div class="side-list"></div>
+            <div id="side-list" class="side-list">
+                <input type="text" class="form-control" id="search-bar" placeholder="Search...">
+            </div>
             
             <div class="main-content">
 
@@ -57,7 +59,7 @@
                         <p id="details-info"></p>
                     </div>
 
-                    <div class="sign-container">
+                    <div class="sign-in-container">
                         Comment as <span id="signed-in-username"></span>
                         <button type="button" id="sign-in-btn" class="btn btn-primary" data-toggle="modal" data-target="#signInModal">
                             Sign In
