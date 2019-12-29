@@ -48,10 +48,13 @@ function fetchAllData() {
     });
 }
 
-function fetchSingleData(id) {
+function fetchSingleData(id, card) {
     fetch(`http://localhost:3000/criminals/${id}`)
     .then(res => res.json())
-    .then(res => renderMainContent(res.data))
+    .then(res => {
+        card.classList.add('card-focus');
+        renderMainContent(res.data);
+    });
 }
 
 
@@ -70,7 +73,7 @@ function renderSideList(data) {
     cardName.className = 'card-name';
     cardName.innerText = data.name;
 
-    cardBody.append(cardName)
+    cardBody.append(cardName);
     
     card.append(cardImg, cardBody)
     sideList.append(card);
@@ -78,7 +81,10 @@ function renderSideList(data) {
     card.addEventListener('click', () => {
         formContainer.innerHTML = "";
         commentsDiv.innerHTML = "";
-        fetchSingleData(data.id);
+
+        $('.side-list').children().removeClass('card-focus');
+        
+        fetchSingleData(data.id, card);
     });
 
     // filter out names by search keywords
@@ -119,15 +125,20 @@ function renderMainContent(data) {
 
 function renderForm(data) {
     let commentInput = document.createElement('textarea');
-    commentInput.className = "form-control";
+    commentInput.rows = '5';
+    commentInput.classList.add("form-control", "textarea-comment")
     commentInput.placeholder = "Tell us what you know";
 
+    let btnDiv = document.createElement('div');
+    btnDiv.className = "form-btn-group";
+
     let submitBtn = document.createElement('button');
-    submitBtn.type="button";
-    submitBtn.classList.add('btn', 'btn-primary');
+    submitBtn.type = "button";
+    submitBtn.classList.add('btn', 'btn-light', 'form-btn');
     submitBtn.innerText = "COMMENT";
+    btnDiv.append(submitBtn)
     
-    formContainer.append(commentInput, submitBtn);
+    formContainer.append(commentInput, btnDiv);
 
     submitBtn.style.cursor = "not-allowed";
     submitBtn.disabled = true;
@@ -156,12 +167,21 @@ function renderForm(data) {
 function renderCommentList(comment) {
   
     let commentLi  = document.createElement('div');
-    commentLi.id ="comment-list";
+    commentLi.id = "comment-list";
+
+    let userContainer = document.createElement('div');
+    userContainer.className = "user-container";
 
     let username = document.createElement('h6');
     username.id = 'comment-username';
     username.innerText = comment.user.username;
+
+    let updatedAt = document.createElement('h6');
+    updatedAt.id = 'updated-at';
+    updatedAt.innerText = comment.updated_at;
     
+    userContainer.append(username, updatedAt)
+
     let commentContent = document.createElement('p');
     commentContent.id = 'comment-content';
     commentContent.innerText = comment.content;
@@ -170,16 +190,16 @@ function renderCommentList(comment) {
     btnGroup.id = "btn-group"
 
     let editBtn = document.createElement("button");
-    editBtn.innerText = "Edit";
-    editBtn.classList.add('btn', 'btn-primary');
+    editBtn.className = "comment-btns";
+    editBtn.innerText = "EDIT";
 
     let deleteBtn = document.createElement("button");
-    deleteBtn.innerText = "Delete"
-    deleteBtn.classList.add('btn', 'btn-danger');
+    deleteBtn.className = "comment-btns";
+    deleteBtn.innerText = "DELETE";
 
     btnGroup.append(editBtn, deleteBtn);
 
-    commentLi.append(username, commentContent);
+    commentLi.append(userContainer, commentContent);
 
     ///edit comment form
     let editComentFormGroup = document.createElement('div');
@@ -187,21 +207,22 @@ function renderCommentList(comment) {
 
     let commentInput = document.createElement('textarea');
     commentInput.className = "form-control";
+    commentInput.rows = "4";
     commentInput.innerText = comment.content;
 
     let cancelBtn = document.createElement('button');
-    cancelBtn.innerText = "Cancel";
-    cancelBtn.classList.add('btn', 'btn-primary');
+    cancelBtn.className = "comment-btns";
+    cancelBtn.innerText = "CANCEL";
     
     let updateBtn = document.createElement('button');
-    updateBtn.innerText = "Update";
-    updateBtn.classList.add('btn', 'btn-danger');
+    updateBtn.className = "comment-btns";
+    updateBtn.innerText = "UPDATE";
 
     editComentFormGroup.append(commentInput, cancelBtn, updateBtn);
     editComentFormGroup.style.display = "none";
 
     commentsDiv.insertBefore(commentLi, commentsDiv.firstChild);
-
+    
     if (currentUser) {
 
         if(username.innerText === currentUser.username) commentLi.append(btnGroup, editComentFormGroup)
@@ -244,7 +265,7 @@ function updateComment(btns, form, commentDiv, id) {
             form.style.display = "none";
             btns.style.display = "";
             commentDiv.style.display = "";
-            commentDiv.innerText = newComment.content
+            commentDiv.innerText = newComment.content;
         })
     }
     
@@ -284,7 +305,6 @@ submitUsername.addEventListener('click', () => {
    let errorMessage = document.querySelector('#error-message');
 
     if(inputVal === '') {
-        errorMessage.style.color = "red";
         errorMessage.innerText = "Please enter username"
     } else {
         createNewUser(inputVal);

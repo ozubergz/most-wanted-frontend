@@ -14,6 +14,9 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap" rel="stylesheet">
+
         <script defer src="index.js"></script>
     </head>
     <body>
@@ -24,34 +27,62 @@
             </div>
             
             <div class="main-content">
-
-                <h3 id="main-name"></h3>
-
-                <div class="main-images-container"> 
-                    <img id="main-left-image" src="">
-                    <a id="main-pdf-link" target="_blank" href="" >
-                        <img id="main-right-image" src="">
-                    </a>
+                <div class="top-header">
+                    <h1 class="top-header-h1">MOST WANTED</h1>
+                    <h3 class="top-header-h3    ">CYBER CRIMES</h3>
                 </div>
+                
 
                 <div class="main-info">
 
+                    <h1 id="main-name"></h1>
+
+                    <div class="main-images-container"> 
+                        <img id="main-left-image" src="">
+                        <a id="main-pdf-link" target="_blank" href="" >
+                            <img id="main-right-image" src="">
+                        </a>
+                    </div>
+
                     <div class="alias-container">
-                        <h3>Aliases</h3>
+                        <h3>ALIASES</h3>
                         <p id="alias-info"></p>
                     </div>
 
-                    <div id="description-contianer">
+                    <div class="description-container">
                         <h3>Description</h3>
-                        <ul id="description-ul">
-                            <li>Name <span id="li-name"></span></li>
-                            <li>Date of Birth (used) <span id="li-birth"></span></li>
-                            <li>Place of Brith <span id="li-place"></span></li>
-                            <li>Hair <span id="li-hair"></span></li>
-                            <li>Eyes <span id="li-eyes"></span></li>
-                            <li>Sex <span id="li-sex"></span></li>
-                            <li>Race <span id="li-race"></span></li>
-                        </ul>
+                        <table class="table table-striped">
+                            <tbody>
+                              <tr>
+                                <th scope="row">Name</th>
+                                <td id="li-name"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Date of Birth (used)</th>
+                                <td id="li-birth"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Place of Birth</th>
+                                <td id="li-place"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Hair</th>
+                                <td id="li-hair"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Eyes</th>
+                                <td id="li-eyes"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Sex</th>
+                                <td id="li-sex"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Race</th>
+                                <td id="li-race"></td>
+                              </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="details-container">
@@ -61,39 +92,38 @@
 
                     <div class="sign-in-container">
                         Comment as <span id="signed-in-username"></span>
-                        <button type="button" id="sign-in-btn" class="btn btn-primary" data-toggle="modal" data-target="#signInModal">
-                            Sign In
-                        </button>
+                        <a type="button" id="sign-in-btn" data-toggle="modal" data-target="#signInModal">
+                            sign in
+                        </a>
                         <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModal" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title" id="exampleModalLongTitle">Enter a username</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                    <span aria-hidden="true" style="color: white;">&times;</span>
                                   </button>
                                 </div>
                                 <div class="modal-body">
                                     <h6 id="error-message"></h6>
-                                    <input type="text" name="username" id="input-username" class="form control">
+                                    <input type="text" name="username" id="input-username" class="form-control">
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <button type="button" id="submit-username-btn" class="btn btn-primary">Submit</button>
+                                  <button type="button" id="submit-username-btn" class="btn btn-primary">Enter</button>
                                 </div>
                               </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-container">
-                        <h5 id="from-error-msg"></h5>
-                    </div>
+                    <div class="form-container"></div>
+                    
+                    <hr>
+    
+                    <div id="comments"></div>
                 </div>
                 
-                <hr>
-
-                <div id="comments"></div>
             </div>
         </div>
 
