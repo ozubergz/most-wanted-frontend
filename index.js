@@ -41,13 +41,6 @@ let currentUser;
 
 fetchAllData();
 
-pBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 1000,
-        behavior: 'smooth'
-    });
-})
-
 function fetchAllData() {
     fetch('http://localhost:3000/criminals')
     .then(res => res.json())
@@ -150,7 +143,7 @@ function renderForm(data) {
     submitBtn.type = "button";
     submitBtn.classList.add('btn', 'btn-light', 'form-btn');
     submitBtn.innerText = "COMMENT";
-    btnDiv.append(submitBtn)
+    btnDiv.append(submitBtn);
     
     formContainer.append(commentInput, btnDiv);
 
@@ -196,14 +189,14 @@ function renderCommentList(comment) {
     updatedAt.id = 'updated-at';
     updatedAt.innerText = comment.updated_at;
     
-    userContainer.append(username, updatedAt)
+    userContainer.append(username, updatedAt);
 
     let commentContent = document.createElement('p');
     commentContent.id = 'comment-content';
     commentContent.innerText = comment.content;
 
     let btnGroup = document.createElement('div');
-    btnGroup.id = "btn-group"
+    btnGroup.id = "btn-group";
 
     let editBtn = document.createElement("button");
     editBtn.className = "comment-btns";
