@@ -1,13 +1,44 @@
 body {
+    height: 100%;
     font-family: 'Roboto', sans-serif;
 }
 
-.container-fluid {
+.parallax {
+    height: 1000px;
+    background-color: black;
+    z-index: 1;
+}
+
+.parallax-fonts {
+    display: inline-block;
+    color: white;
+    font-family: "Arial Black";
+    margin-top: 15%;
+    margin-left: 40%;
+    line-height: 1em;
+}
+
+.fonts {
+    font-size: 10rem;
+    background-image: url("https://66.media.tumblr.com/ad0ebf01e41a015c039de09eba75e0ca/tumblr_oz6ok0UkdK1w4t58uo1_500.gifv");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.cyber {
+    margin-bottom: -4rem;
+}
+
+.main-container {
     display: flex;
-    padding: 0px !important;
 }
 
 .side-list {
+    z-index: 0;
+
     position: fixed;
     top: 0;
     bottom: 0;
@@ -217,4 +248,12 @@ body {
 
 .modal-footer {
     border-top: 0 none !important;
+}
+
+.modal-btns {
+    margin: 0.3rem;
+    font-size: 0.8rem !important;
+    font-weight: bold !important;
+    padding: 0.2rem !important;
+    width: 5rem;
 }

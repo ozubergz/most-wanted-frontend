@@ -21,7 +21,14 @@
     </head>
     <body>
 
-        <div class="container-fluid">
+        <div class="parallax">
+          <div class="parallax-fonts">
+            <h1 class="cyber fonts">CYBER</h1>
+            <h1 class="crimes fonts">CRIMES</h1>
+          </div>
+        </div>
+        
+        <div class="main-container">
             <div id="side-list" class="side-list">
                 <input type="text" class="form-control" id="search-bar" placeholder="Search...">
             </div>
@@ -29,10 +36,9 @@
             <div class="main-content">
                 <div class="top-header">
                     <h1 class="top-header-h1">MOST WANTED</h1>
-                    <h3 class="top-header-h3    ">CYBER CRIMES</h3>
+                    <h3 class="top-header-h3">CYBER CRIMES</h3>
                 </div>
                 
-
                 <div class="main-info">
 
                     <h1 id="main-name"></h1>
@@ -109,8 +115,8 @@
                                     <input type="text" name="username" id="input-username" class="form-control">
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <button type="button" id="submit-username-btn" class="btn btn-primary">Enter</button>
+                                  <button type="button" class="btn btn-secondary modal-btns" data-dismiss="modal">CLOSE</button>
+                                  <button type="button" id="submit-username-btn" class="btn btn-success modal-btns">ENTER</button>
                                 </div>
                               </div>
                             </div>
@@ -123,7 +129,6 @@
     
                     <div id="comments"></div>
                 </div>
-                
             </div>
         </div>
 

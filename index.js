@@ -1,6 +1,8 @@
 //Left side List
 const sideList = document.getElementById('side-list');
 
+const parallax = document.querySelector('.parallax');
+
 //Right Main Content ---> Top Name
 const mainName = document.querySelector('#main-name');
 
@@ -38,6 +40,13 @@ const searchBar = document.querySelector('#search-bar');
 let currentUser;
 
 fetchAllData();
+
+pBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 1000,
+        behavior: 'smooth'
+    });
+})
 
 function fetchAllData() {
     fetch('http://localhost:3000/criminals')
@@ -81,6 +90,11 @@ function renderSideList(data) {
     card.addEventListener('click', () => {
         formContainer.innerHTML = "";
         commentsDiv.innerHTML = "";
+
+        window.scrollTo({
+            top: 1000,
+            behavior: 'smooth'
+        });
 
         $('.side-list').children().removeClass('card-focus');
         
@@ -165,7 +179,9 @@ function renderForm(data) {
 }
 
 function renderCommentList(comment) {
-  
+    
+    //////////////////////////start of comment list////////////////////////
+
     let commentLi  = document.createElement('div');
     commentLi.id = "comment-list";
 
@@ -194,6 +210,8 @@ function renderCommentList(comment) {
     editBtn.innerText = "EDIT";
 
     let deleteBtn = document.createElement("button");
+    deleteBtn.dataset.toggle = "modal";
+    deleteBtn.dataset.target = "#deletePopUp";
     deleteBtn.className = "comment-btns";
     deleteBtn.innerText = "DELETE";
 
@@ -201,7 +219,10 @@ function renderCommentList(comment) {
 
     commentLi.append(userContainer, commentContent);
 
-    ///edit comment form
+    /////////////////////////end of comment list////////////////////
+
+    ///////////////////////edit form//////////////////////////////
+
     let editComentFormGroup = document.createElement('div');
     editComentFormGroup.id = "comment-form-group";
 
@@ -220,12 +241,78 @@ function renderCommentList(comment) {
 
     editComentFormGroup.append(commentInput, cancelBtn, updateBtn);
     editComentFormGroup.style.display = "none";
-
+    
+    ////////////////////////end of edit form/////////////////////////
+    
     commentsDiv.insertBefore(commentLi, commentsDiv.firstChild);
+
+    ///////////////////////////start modal////////////////////////////
+
+    let modal = document.createElement('div');
+    modal.className = "modal";
+    modal.id="deletePopUp";
+    modal.setAttribute('role', 'dialog');
+
+    let modalDialog = document.createElement('div');
+    modalDialog.className = "modal-dialog";
+    modalDialog.setAttribute('role', 'document');
+    
+    modal.append(modalDialog);
+
+    let modalContent = document.createElement('div');
+    modalContent.className = "modal-content";
+
+    modalDialog.append(modalContent);
+
+    let modalHeader = document.createElement('div');
+    modalHeader.className = "modal-header";
+
+    let modalHeaderBtn = document.createElement('button');
+    modalHeaderBtn.type="button";
+    modalHeaderBtn.className="close";
+    modalHeaderBtn.dataset.dismiss="modal";
+
+    let span = document.createElement('span');
+    span.style.color = "white";
+    span.innerHTML = "&times;";
+
+    modalHeaderBtn.append(span);
+    
+    modalHeader.append(modalHeaderBtn);
+
+    let modalBody = document.createElement('div');
+    modalBody.className = "modal-body";
+
+    let modalpTag = document.createElement('p');
+    modalpTag.className = 'text-center';
+    modalpTag.innerText = "Do you want to delete?";
+    modalpTag.style.color = 'white';
+
+    modalBody.append(modalpTag);
+
+    let modalFooter = document.createElement('div');
+    modalFooter.className = "modal-footer";
+    
+    let modalBtnNo = document.createElement('button');
+    modalBtnNo.dataset.dismiss = "modal";
+    modalBtnNo.type = "button";
+    modalBtnNo.classList.add('btn', 'btn-secondary', 'modal-btns');
+    modalBtnNo.innerText = 'NO';
+
+    let modalBtnYes = document.createElement('button');
+    modalBtnYes.type = "button";
+    modalBtnYes.classList.add('btn', 'btn-danger', 'modal-btns');
+    modalBtnYes.innerText = "YES";
+    
+    modalFooter.append(modalBtnNo, modalBtnYes);
+    
+    modalContent.append(modalHeader, modalBody, modalFooter);
+
+    ///////////////////////////end of modal//////////////////////////////
     
     if (currentUser) {
 
-        if(username.innerText === currentUser.username) commentLi.append(btnGroup, editComentFormGroup)
+        if(username.innerText === currentUser.username) commentLi.append(btnGroup, editComentFormGroup, modal)
 
         editBtn.addEventListener('click', () => {
             btnGroup.style.display = "none";
@@ -239,8 +326,9 @@ function renderCommentList(comment) {
            commentContent.style.display = "";
         });
 
-        deleteBtn.addEventListener('click', () => {
-           handleRemove(commentLi, comment.id) 
+        modalBtnYes.addEventListener('click', () => {
+            $('#deletePopUp').modal('hide');
+            handleRemove(commentLi, comment.id);
         });
 
         updateBtn.addEventListener('click', () => {
