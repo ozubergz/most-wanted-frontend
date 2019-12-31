@@ -1,8 +1,6 @@
 //Left side List
 const sideList = document.getElementById('side-list');
 
-const parallax = document.querySelector('.parallax');
-
 //Right Main Content ---> Top Name
 const mainName = document.querySelector('#main-name');
 
@@ -85,7 +83,7 @@ function renderSideList(data) {
         commentsDiv.innerHTML = "";
 
         window.scrollTo({
-            top: 1000,
+            top: 0,
             behavior: 'smooth'
         });
 

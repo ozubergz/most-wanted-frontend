@@ -17,120 +17,122 @@
         <!-- google fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap" rel="stylesheet">
 
+        <script defer src="parallax.js"></script>
         <script defer src="index.js"></script>
     </head>
     <body>
-
-        <div class="parallax">
-          <div class="parallax-fonts">
-            <h1 class="cyber fonts">CYBER</h1>
-            <h1 class="crimes fonts">CRIMES</h1>
-          </div>
+      
+      <div class="parallax">
+        <div class="parallax-title">
+          <h1 class="cyber fonts">CYBER</h1>
+          <h1 class="crimes fonts">CRIMES</h1>
         </div>
+      </div>
+      
         
-        <div class="main-container">
-            <div id="side-list" class="side-list">
-                <input type="text" class="form-control" id="search-bar" placeholder="Search...">
-            </div>
-            
-            <div class="main-content">
-                <div class="top-header">
-                    <h1 class="top-header-h1">MOST WANTED</h1>
-                    <h3 class="top-header-h3">CYBER CRIMES</h3>
-                </div>
-                
-                <div class="main-info">
+      <div class="main-container">
+          <div id="side-list" class="side-list">
+              <input type="text" class="form-control" id="search-bar" placeholder="Search...">
+          </div>
+          
+          <div class="main-content">
+              <div class="top-header">
+                  <h1 class="top-header-h1">MOST WANTED</h1>
+                  <h3 class="top-header-h3">CYBER CRIMES</h3>
+              </div>
+              
+              <div class="main-info">
 
-                    <h1 id="main-name"></h1>
+                  <h1 id="main-name"></h1>
 
-                    <div class="main-images-container"> 
-                        <img id="main-left-image" src="">
-                        <a id="main-pdf-link" target="_blank" href="" >
-                            <img id="main-right-image" src="">
-                        </a>
-                    </div>
+                  <div class="main-images-container"> 
+                      <img id="main-left-image" src="">
+                      <a id="main-pdf-link" target="_blank" href="" >
+                          <img id="main-right-image" src="">
+                      </a>
+                  </div>
 
-                    <div class="alias-container">
-                        <h3>ALIASES</h3>
-                        <p id="alias-info"></p>
-                    </div>
+                  <div class="alias-container">
+                      <h3>ALIASES</h3>
+                      <p id="alias-info"></p>
+                  </div>
 
-                    <div class="description-container">
-                        <h3>Description</h3>
-                        <table class="table table-striped">
-                            <tbody>
-                              <tr>
-                                <th scope="row">Name</th>
-                                <td id="li-name"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Date of Birth (used)</th>
-                                <td id="li-birth"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Place of Birth</th>
-                                <td id="li-place"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Hair</th>
-                                <td id="li-hair"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Eyes</th>
-                                <td id="li-eyes"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Sex</th>
-                                <td id="li-sex"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Race</th>
-                                <td id="li-race"></td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                  <div class="description-container">
+                      <h3>Description</h3>
+                      <table class="table table-striped">
+                          <tbody>
+                            <tr>
+                              <th scope="row">Name</th>
+                              <td id="li-name"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Date of Birth (used)</th>
+                              <td id="li-birth"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Place of Birth</th>
+                              <td id="li-place"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Hair</th>
+                              <td id="li-hair"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Eyes</th>
+                              <td id="li-eyes"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Sex</th>
+                              <td id="li-sex"></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Race</th>
+                              <td id="li-race"></td>
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
 
-                    <div class="details-container">
-                        <h3>Details</h3>
-                        <p id="details-info"></p>
-                    </div>
+                  <div class="details-container">
+                      <h3>Details</h3>
+                      <p id="details-info"></p>
+                  </div>
 
-                    <div class="sign-in-container">
-                        Comment as <span id="signed-in-username"></span>
-                        <a type="button" id="sign-in-btn" data-toggle="modal" data-target="#signInModal">
-                            sign in
-                        </a>
-                        <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModal" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLongTitle">Enter a username</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true" style="color: white;">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                    <h6 id="error-message"></h6>
-                                    <input type="text" name="username" id="input-username" class="form-control">
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary modal-btns" data-dismiss="modal">CLOSE</button>
-                                  <button type="button" id="submit-username-btn" class="btn btn-success modal-btns">ENTER</button>
-                                </div>
+                  <div class="sign-in-container">
+                      Comment as <span id="signed-in-username"></span>
+                      <a type="button" id="sign-in-btn" data-toggle="modal" data-target="#signInModal">
+                          sign in
+                      </a>
+                      <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModal" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Enter a username</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true" style="color: white;">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <h6 id="error-message"></h6>
+                                  <input type="text" name="username" id="input-username" class="form-control">
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary modal-btns" data-dismiss="modal">CLOSE</button>
+                                <button type="button" id="submit-username-btn" class="btn btn-success modal-btns">ENTER</button>
                               </div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-container"></div>
-                    
-                    <hr>
-    
-                    <div id="comments"></div>
-                </div>
-            </div>
-        </div>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="form-container"></div>
+                  
+                  <hr>
+  
+                  <div id="comments"></div>
+              </div>
+          </div>
+      </div>
 
     </body>
 </html>

@@ -4,19 +4,39 @@ body {
 }
 
 .parallax {
-    height: 1000px;
-    background-color: black;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    /* background-color: rgb(24, 24, 24); */
+    background-color: white;
     z-index: 1;
 }
 
-.parallax-fonts {
+.scrollEffectDown {
+    animation-name: scrollDown;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes scrollDown {
+    from {transform: translateY(0%)}
+    to {transform: translateY(-100%)}
+}
+
+.parallax-title {
     display: inline-block;
     color: white;
     font-family: "Arial Black";
-    margin-top: 15%;
-    margin-left: 40%;
-    line-height: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
+
 
 .fonts {
     font-size: 10rem;
@@ -36,9 +56,8 @@ body {
     display: flex;
 }
 
-.side-list {
-    z-index: 0;
 
+.side-list {
     position: fixed;
     top: 0;
     bottom: 0;
