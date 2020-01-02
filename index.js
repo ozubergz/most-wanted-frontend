@@ -44,19 +44,19 @@ function fetchAllData() {
     .then(res => res.json())
     .then(res => { 
         res.forEach(renderSideList);
-        renderMainContent(res[0]);
+        // console.log(res[0])
+        fetchSingleData(res[0].id)
+        // renderMainContent(res[0]);
     });
 }
 
-function fetchSingleData(id, card) {
+function fetchSingleData(id) {
     fetch(`http://localhost:3000/criminals/${id}`)
     .then(res => res.json())
     .then(res => {
-        card.classList.add('card-focus');
         renderMainContent(res.data);
     });
 }
-
 
 function renderSideList(data) {
     let card = document.createElement('div');
@@ -75,7 +75,8 @@ function renderSideList(data) {
 
     cardBody.append(cardName);
     
-    card.append(cardImg, cardBody)
+    card.append(cardImg, cardBody);
+    
     sideList.append(card);
 
     card.addEventListener('click', () => {
@@ -88,8 +89,9 @@ function renderSideList(data) {
         });
 
         $('.side-list').children().removeClass('card-focus');
-        
-        fetchSingleData(data.id, card);
+        card.classList.add('card-focus');
+                
+        fetchSingleData(data.id);
     });
 
     // filter out names by search keywords
@@ -100,8 +102,10 @@ function renderSideList(data) {
             card.style.display = "";
         } else {
             card.style.display = "none";
-        }       
+        }
     });
+
+    sideList.children[1].classList.add('card-focus')
 }
 
 function renderMainContent(data) {

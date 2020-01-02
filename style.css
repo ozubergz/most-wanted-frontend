@@ -10,8 +10,7 @@ body {
     left: 0;
     bottom: 0;
     right: 0;
-    /* background-color: rgb(24, 24, 24); */
-    background-color: white;
+    background-color: rgb(0, 0, 0);
     z-index: 1;
 }
 
@@ -28,7 +27,6 @@ body {
 
 .parallax-title {
     display: inline-block;
-    color: white;
     font-family: "Arial Black";
     position: absolute;
     top: 50%;
@@ -55,7 +53,6 @@ body {
 .main-container {
     display: flex;
 }
-
 
 .side-list {
     position: fixed;
@@ -86,8 +83,14 @@ body {
 
 .card-container:active {
     background-color: rgb(47, 106, 233);
-    transform: translate(0%);
+    transform: translate(0);
     box-shadow: none;
+}
+
+.card-hover {
+    opacity: 1;
+    box-shadow: 6px 8px 14px 0px rgba(31, 31, 31, 0.75);
+    transform: translate(-3px, -3px);
 }
 
 .card-focus {
