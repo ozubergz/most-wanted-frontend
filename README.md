@@ -1,4 +1,4 @@
-# most-wanted-frontend
+# Most Wanted Frontend
 
 Website allows users to provide information to help authorities to catch the FBI's most wanted cyber criminals
 
