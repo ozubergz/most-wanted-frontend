@@ -1,5 +1,4 @@
 let parallax = document.querySelector('.parallax');
-
 let mainContainer = document.querySelector('.main-container');
 mainContainer.style.display = "none";
 

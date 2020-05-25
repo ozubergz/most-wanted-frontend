@@ -35,12 +35,14 @@ const formContainer = document.querySelector('.form-container');
 
 const searchBar = document.querySelector('#search-bar');
 
+const ROOT_URL = "https://most-wanted-backend.herokuapp.com";
+
 let currentUser;
 
 fetchAllData();
 
 function fetchAllData() {
-    fetch('http://localhost:3000/criminals')
+    fetch(`${ROOT_URL}/criminals`)
     .then(res => res.json())
     .then(res => { 
         res.forEach(renderSideList);
@@ -51,7 +53,7 @@ function fetchAllData() {
 }
 
 function fetchSingleData(id) {
-    fetch(`http://localhost:3000/criminals/${id}`)
+    fetch(`${ROOT_URL}/criminals/${id}`)
     .then(res => res.json())
     .then(res => {
         renderMainContent(res.data);
@@ -336,7 +338,7 @@ function renderCommentList(comment) {
 function updateComment(btns, form, commentDiv, id) {
     let content = form.querySelector('.form-control').value;
     if(content !== "") {
-        fetch(`http://localhost:3000/comments/${id}`, {
+        fetch(`${ROOT_URL}/comments/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -355,7 +357,7 @@ function updateComment(btns, form, commentDiv, id) {
 }
 
 function createNewComment(criminal, commentInput) {
-    fetch('http://localhost:3000/comments', {
+    fetch(`${ROOT_URL}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -376,7 +378,7 @@ function createNewComment(criminal, commentInput) {
 
 
 function handleRemove(comment, id) {
-    fetch(`http://localhost:3000/comments/${id}`, {
+    fetch(`${ROOT_URL}/comments/${id}`, {
         method: 'DELETE'
     })
     .then(res => res.json())
@@ -399,7 +401,7 @@ function createNewUser(username) {
     let signedInUsername = document.querySelector('#signed-in-username');
     let errorMessage = document.querySelector('#error-message');
     
-    fetch('http://localhost:3000/users', {
+    fetch(`${ROOT_URL}/users`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
