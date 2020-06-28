@@ -1,3 +1,9 @@
+//main content
+const main = document.querySelector('.main-content');
+
+//loader
+const loader = document.querySelector('.loader')
+
 //Left side List
 const sideList = document.getElementById('side-list');
 
@@ -37,18 +43,44 @@ const searchBar = document.querySelector('#search-bar');
 
 const ROOT_URL = "https://most-wanted-backend.herokuapp.com";
 
-let currentUser;
 
+let currentUser;
 fetchAllData();
+
+main.style.display = "none";
+sideList.style.display = "none";
+
 
 function fetchAllData() {
     fetch(`${ROOT_URL}/criminals`)
     .then(res => res.json())
     .then(res => { 
-        res.forEach(renderSideList);
-        // console.log(res[0])
-        fetchSingleData(res[0].id)
-        // renderMainContent(res[0]);
+
+
+        setTimeout(() => {
+
+            loader.style.display = "none";
+
+            main.style.display = "block";
+            sideList.style.display = "block";
+
+            res.forEach(renderSideList);
+            fetchSingleData(res[0].id);
+
+        }, 2000);
+
+        // if(res.length < 0) {
+
+        //     console.log('loading...')
+
+        // } else {
+
+        //     console.log("loaded")
+
+        //     res.forEach(renderSideList);
+        //     fetchSingleData(res[0].id)
+        // }
+
     });
 }
 
