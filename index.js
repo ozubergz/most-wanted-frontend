@@ -50,14 +50,12 @@ fetchAllData();
 main.style.display = "none";
 sideList.style.display = "none";
 
-
 function fetchAllData() {
     fetch(`${ROOT_URL}/criminals`)
     .then(res => res.json())
     .then(res => { 
 
-
-        setTimeout(() => {
+        if(res.length !== 0) {
 
             loader.style.display = "none";
 
@@ -66,20 +64,7 @@ function fetchAllData() {
 
             res.forEach(renderSideList);
             fetchSingleData(res[0].id);
-
-        }, 2000);
-
-        // if(res.length < 0) {
-
-        //     console.log('loading...')
-
-        // } else {
-
-        //     console.log("loaded")
-
-        //     res.forEach(renderSideList);
-        //     fetchSingleData(res[0].id)
-        // }
+        }
 
     });
 }
